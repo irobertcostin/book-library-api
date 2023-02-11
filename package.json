@@ -4,11 +4,12 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "devStart":"nodemon ./app/app.js"
+    "start":"nodemon ./app/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "robert",
   "license": "ISC",
+  "type":"module",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
