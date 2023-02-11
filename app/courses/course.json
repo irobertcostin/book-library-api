@@ -1,0 +1,34 @@
+{"courses":[{
+
+    "id":1,
+    "name":"How to become poor",
+    "department":"Finance"
+},
+
+{
+
+    "id":2,
+    "name":"Become a successfull barber",
+    "department":"Cosmetics"
+},
+{
+
+    "id":3,
+    "name":"Unghii cu gel",
+    "department":"Cosmetics"
+},
+{
+
+    "id":4,
+    "name":"Epilare definitiva",
+    "department":"Cosmetics"
+},
+{
+
+    "id":5,
+    "name":"Tatuaje",
+    "department":"Cosmetics"
+}
+
+
+]}

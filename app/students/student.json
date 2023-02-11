@@ -1,0 +1,35 @@
+{"students":[{
+    "id":1,
+    "first_name":"John",
+    "last_name":"Doe",
+    "email":"john.doe@mycode.com",
+    "age":17
+},
+{
+    "id":2,
+    "first_name":"Mariah",
+    "last_name":"Carey",
+    "email":"mariah.carey@mycode.com",
+    "age":18
+},
+{
+    "id":3,
+    "first_name":"Jenica",
+    "last_name":"Boerica",
+    "email":"jenica.boerica@mycode.com",
+    "age":19
+},
+{
+    "id":4,
+    "first_name":"Gustavo",
+    "last_name":"Patron",
+    "email":"gustavo.patron@mycode.com",
+    "age":17
+},
+{
+    "id":5,
+    "first_name":"Jeni",
+    "last_name":"Jana",
+    "email":"jeni.jana@mycode.com",
+    "age":18
+}]}
