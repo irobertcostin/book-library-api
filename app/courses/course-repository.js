@@ -94,12 +94,15 @@ export async function editCourse(course,id){
     } else {
 
         data.courses.forEach(element => {
-            if(course.name){
-                element.name=course.name
-            }
+            if(element.id==id){
 
-            if(course.department){
-                element.department=course.department
+                if(course.name){
+                    element.name=course.name
+                }
+    
+                if(course.department){
+                    element.department=course.department
+                }
             }
         });
 
