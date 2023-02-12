@@ -34,7 +34,7 @@ export async function saveCourses(data){
 
     return new Promise((resolve,reject)=>{
 
-        fs.writeFile(("./app/courses/course.json"),JSON.strinfigy(data),(err,data)=>{
+        fs.writeFile(("./app/courses/course.json"),JSON.stringify(data),(err,data)=>{
 
             if(err){
                 reject(err)
@@ -44,5 +44,31 @@ export async function saveCourses(data){
         })
 
     })
+
+}
+
+
+
+export async function addCourse(course){
+
+    let data = await getCourses();
+    let ids = data.courses.map(e=>e.id)
+    let id = Math.floor(Math.random() * 3000 + 1)
+    while (ids.includes(id) === true) {
+        id = Math.floor(Math.random() * 1000 + 1);
+    }
+
+    // after no longer generating, the id is assigned to the new student
+    course.id = id;
+
+    if(course.name===""&&course.department===""){
+
+        throw new Error ("Missing course information")
+
+    } else {
+        data.courses.push(course);
+        await saveCourses(data);
+    }
+
 
 }

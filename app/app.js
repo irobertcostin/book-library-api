@@ -1,6 +1,6 @@
-import { getBooks ,saveBooks} from "./books/book-repository.js";
-import { getCourses ,saveCourses} from "./courses/course-repository.js";
-import { getEnrollments ,saveEnrollments} from "./enrollments/enrollment-repository.js";
+import { addBooks,getBooks ,saveBooks} from "./books/book-repository.js";
+import { addCourse, getCourses ,saveCourses} from "./courses/course-repository.js";
+import { addEnrollment, getEnrollments ,saveEnrollments} from "./enrollments/enrollment-repository.js";
 import { getStudents ,saveStudents,addStudent} from "./students/student-repository.js";
 
 import express, {json,request,response} from "express";
@@ -68,9 +68,10 @@ app.get('/students',async(request,response)=>{
 
 })
 
+
 app.post('/students/add',async (request,response,next)=>{
 
-    console.log("aici")
+    
 
     try {
             let student = {
@@ -92,35 +93,80 @@ app.post('/students/add',async (request,response,next)=>{
         next(error);
     }
 
+})
+
+
+
+app.post('/enrollments/add',async (request,response,next)=>{
+
+    
+
+    try {
+            let enrollment = {
+                student_id: request.body.student_id,
+                course_id: request.body.course_id,
+                created_at: request.body.created_at
+                
+            }
+
+
+
+            await addEnrollment(enrollment);
+
+            // json response, of a JSON parsed object 
+            response.status(202).json(enrollment);
+        
+    } catch (error) {
+        console.log(error)
+        next(error);
+    }
+
 
 
 })
 
 
 
-/// am ramas aici
-app.post('/enrollments/add',async (request,response,next)=>{
+app.post('/courses/add',async (request , response , next)=>{
 
-    console.log("aici")
 
     try {
-            let student = {
-                first_name: request.body.first_name,
-                last_name: request.body.last_name,
-                email: request.body.email,
-                age: request.body.age
-            }
 
+        let course = {
+            name:request.body.name,
+            department:request.body.department
+        }
 
+        await addCourse(course);
 
-            await addStudent(student);
+        response.status(203).json(course)
 
-            // json response, of a JSON parsed object 
-            response.status(201).json(student);
         
     } catch (error) {
         console.log(error)
-        next(error);
+        next(error)
+    }
+})
+
+
+app.post('/books/add',async (request,response,next)=>{
+
+
+    try {
+        
+        let book = {
+
+            book_name:request.body.book_name,
+            created_at:request.body.created_at
+        }
+
+        await addBooks(book);
+
+        response.status(206).json(book)
+
+    } catch (error) {
+        console.log(error)
+        next(error)
     }
 
 
