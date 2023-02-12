@@ -57,10 +57,10 @@ export async function addStudent (student){
         id = Math.floor(Math.random() * 1000 + 1);
     }
 
-    // after no longer generating, the id is assigned to the new car
+    // after no longer generating, the id is assigned to the new student
     student.id = id;
 
-    if(student.id===""&&student.first_name===""&&student.last_name===""&&student.email===""&&student.age===""){
+    if(student.first_name===""&&student.last_name===""&&student.email===""&&student.age===""){
 
         throw new Error ("Missing student attributes")
 

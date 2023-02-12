@@ -34,7 +34,7 @@ export async function saveEnrollments(data){
 
     return new Promise((resolve,reject)=>{
 
-        fs.writeFile(("./app/enrollments/enrollment.json"),JSON.strinfigy(data),(err,data)=>{
+        fs.writeFile(("./app/enrollments/enrollment.json"),JSON.stringify(data),(err,data)=>{
 
             if(err){
                 reject(err)
@@ -61,10 +61,10 @@ export async function addEnrollment (enrollment){
         id = Math.floor(Math.random() * 1000 + 1);
     }
 
-    // after no longer generating, the id is assigned to the new car
+    // after no longer generating, the id is assigned to the new enrollment
     enrollment.id = id;
 
-    if(enrollment.id===""&&enrollment.student_id===""&&enrollment.course_id===""&&enrollment.created_at===""){
+    if(enrollment.student_id===""&&enrollment.course_id===""&&enrollment.created_at===""){
 
         throw new Error ("Missing enrollment attributes")
 
