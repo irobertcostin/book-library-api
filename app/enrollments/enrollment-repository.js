@@ -94,16 +94,18 @@ export async function editEnrollments(enrollment,id){
     } else {
 
         data.enrollment.forEach(element => {
-            if(enrollment.student_id){
-                element.student_id=enrollment.student_id
-            }
-
-            if(enrollment.course_id){
-                element.course_id=enrollment.course_id
-            }
-
-            if(enrollment.created_at){
-                element.created_at=enrollment.created_at
+            if(element.id==id){
+                if(enrollment.student_id){
+                    element.student_id=enrollment.student_id
+                }
+    
+                if(enrollment.course_id){
+                    element.course_id=enrollment.course_id
+                }
+    
+                if(enrollment.created_at){
+                    element.created_at=enrollment.created_at
+                }
             }
         });
 

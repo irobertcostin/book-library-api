@@ -92,12 +92,15 @@ export async function editBook(book,id){
     } else {
 
         data.books.forEach(element => {
-            if(book.book_name){
-                element.book_name=book.book_name
-            }
+            if(element.id==id){
 
-            if(book.created_at){
-                element.created_at=book.created_at
+                if(book.book_name){
+                    element.book_name=book.book_name
+                }
+    
+                if(book.created_at){
+                    element.created_at=book.created_at
+                }
             }
         });
 
