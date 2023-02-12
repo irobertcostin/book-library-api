@@ -11,6 +11,7 @@ import bookRoutes from "./books/book-route.js";
 import courseRoutes from "./courses/course-route.js";
 import enrollmentRoutes from "./enrollments/enrollment-route.js"
 import studentRoutes from "./students/student-route.js"
+
 import cors from "cors";
 
 
@@ -68,3 +69,9 @@ app.listen(3200, () => {
     console.log("server started")
 
 })
+
+
+
+
+// de lucrat erorile pentru acelasi student, carte, etc , incat sa nu se suprapopuleze daca au mai fost intrari
+// de facut client
