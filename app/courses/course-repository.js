@@ -72,3 +72,40 @@ export async function addCourse(course){
 
 
 }
+
+
+
+export async function editCourse(course,id){
+
+    let data =  await getCourses();
+    
+
+    let theCourse = data.courses.filter(e=>e.id==id)
+
+    if(theCourse.length==0){
+
+        throw new Error("No editing possible, ID unexistent")
+
+
+    } else if(course.name===""||course.department===""){
+
+        throw new Error("No editing possible, empty fields")
+
+    } else {
+
+        data.courses.forEach(element => {
+            if(course.name){
+                element.name=course.name
+            }
+
+            if(course.department){
+                element.department=course.department
+            }
+        });
+
+        await saveCourses(data)
+
+    }
+
+
+}

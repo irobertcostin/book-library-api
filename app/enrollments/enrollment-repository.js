@@ -74,3 +74,42 @@ export async function addEnrollment (enrollment){
     }
 
 }
+
+
+export async function editEnrollments(enrollment,id){
+
+    let data =  await getEnrollments();
+
+    let theEnroll = data.enrollment.filter(e=>e.id==id)
+
+    if(theEnroll.length==0){
+
+        throw new Error("No editing possible, ID unexistent")
+
+
+    } else if(enrollment.student_id===""||enrollment.course_id===""||enrollment.created_at===""){
+
+        throw new Error("No editing possible, empty fields")
+
+    } else {
+
+        data.enrollment.forEach(element => {
+            if(enrollment.student_id){
+                element.student_id=enrollment.student_id
+            }
+
+            if(enrollment.course_id){
+                element.course_id=enrollment.course_id
+            }
+
+            if(enrollment.created_at){
+                element.created_at=enrollment.created_at
+            }
+        });
+
+        await saveEnrollments(data)
+
+    }
+
+
+}
