@@ -70,3 +70,40 @@ export async function addBooks(book){
 
 
 }
+
+
+
+export async function editBook(book,id){
+
+    let data =  await getBooks();
+    
+
+    let theBook = data.books.filter(e=>e.id==id)
+
+    if(theBook.length==0){
+
+        throw new Error("No editing possible, ID unexistent")
+
+
+    } else if(book.book_name===""||book.created_at===""){
+
+        throw new Error("No editing possible, empty fields")
+
+    } else {
+
+        data.books.forEach(element => {
+            if(book.book_name){
+                element.book_name=book.book_name
+            }
+
+            if(book.created_at){
+                element.created_at=book.created_at
+            }
+        });
+
+        await saveBooks(data)
+
+    }
+
+
+}

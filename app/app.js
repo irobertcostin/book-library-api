@@ -1,9 +1,9 @@
-import { addBooks,getBooks ,saveBooks} from "./books/book-repository.js";
-import { addCourse, getCourses ,saveCourses} from "./courses/course-repository.js";
-import { addEnrollment, getEnrollments ,saveEnrollments} from "./enrollments/enrollment-repository.js";
-import { getStudents ,saveStudents,addStudent} from "./students/student-repository.js";
+import { addBooks, editBook, getBooks, saveBooks } from "./books/book-repository.js";
+import { addCourse, editCourse, getCourses, saveCourses } from "./courses/course-repository.js";
+import { addEnrollment, editEnrollments, getEnrollments, saveEnrollments } from "./enrollments/enrollment-repository.js";
+import { getStudents, saveStudents, addStudent, editStudent } from "./students/student-repository.js";
 
-import express, {json,request,response} from "express";
+import express, { json, request, response } from "express";
 import cors from "cors";
 
 
@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cors());
 
 
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
 
 
     console.log("1st logger")
@@ -30,64 +30,69 @@ app.use((req,res,next)=>{
 })
 
 
+// GET asyncs
 
-app.get('/books',async(request,response)=>{
+app.get('/books', async (request, response) => {
     console.log("ajunge?")
     const books = await getBooks();
-    
-    
+
+
     response.json(books)
 
 })
 
-app.get('/courses',async(request,response)=>{
-    
+app.get('/courses', async (request, response) => {
+
     const courses = await getCourses();
-    
-    
+
+
     response.json(courses)
 
 })
 
 
-app.get('/enrollments',async(request,response)=>{
-    
+app.get('/enrollments', async (request, response) => {
+
     const enrollments = await getEnrollments();
-    
-    
+
+
     response.json(enrollments)
 
 })
 
-app.get('/students',async(request,response)=>{
-    
+app.get('/students', async (request, response) => {
+
     const students = await getStudents();
-    
-    
+
+
     response.json(students)
 
 })
 
 
-app.post('/students/add',async (request,response,next)=>{
 
-    
+
+// POST asyncs
+
+app.post('/students/add', async (request, response, next) => {
+
+
 
     try {
-            let student = {
-                first_name: request.body.first_name,
-                last_name: request.body.last_name,
-                email: request.body.email,
-                age: request.body.age
-            }
+        let student = {
+            first_name: request.body.first_name,
+            last_name: request.body.last_name,
+            email: request.body.email,
+            age: request.body.age
+        }
 
 
 
-            await addStudent(student);
+        await addStudent(student);
 
-            // json response, of a JSON parsed object 
-            response.status(201).json(student);
-        
+        // json response, of a JSON parsed object 
+        response.status(201).json(student);
+
     } catch (error) {
         console.log(error)
         next(error);
@@ -96,26 +101,25 @@ app.post('/students/add',async (request,response,next)=>{
 })
 
 
+app.post('/enrollments/add', async (request, response, next) => {
 
-app.post('/enrollments/add',async (request,response,next)=>{
 
-    
 
     try {
-            let enrollment = {
-                student_id: request.body.student_id,
-                course_id: request.body.course_id,
-                created_at: request.body.created_at
-                
-            }
+        let enrollment = {
+            student_id: request.body.student_id,
+            course_id: request.body.course_id,
+            created_at: request.body.created_at
+
+        }
 
 
 
-            await addEnrollment(enrollment);
+        await addEnrollment(enrollment);
 
-            // json response, of a JSON parsed object 
-            response.status(202).json(enrollment);
-        
+        // json response, of a JSON parsed object 
+        response.status(202).json(enrollment);
+
     } catch (error) {
         console.log(error)
         next(error);
@@ -126,22 +130,21 @@ app.post('/enrollments/add',async (request,response,next)=>{
 })
 
 
-
-app.post('/courses/add',async (request , response , next)=>{
+app.post('/courses/add', async (request, response, next) => {
 
 
     try {
 
         let course = {
-            name:request.body.name,
-            department:request.body.department
+            name: request.body.name,
+            department: request.body.department
         }
 
         await addCourse(course);
 
         response.status(203).json(course)
 
-        
+
     } catch (error) {
         console.log(error)
         next(error)
@@ -149,15 +152,15 @@ app.post('/courses/add',async (request , response , next)=>{
 })
 
 
-app.post('/books/add',async (request,response,next)=>{
+app.post('/books/add', async (request, response, next) => {
 
 
     try {
-        
+
         let book = {
 
-            book_name:request.body.book_name,
-            created_at:request.body.created_at
+            book_name: request.body.book_name,
+            created_at: request.body.created_at
         }
 
         await addBooks(book);
@@ -175,6 +178,99 @@ app.post('/books/add',async (request,response,next)=>{
 
 
 
+// PUT asyncs 
+
+app.put('/books/edit/id=:id', async (request, response, next) => {
+
+    try {
+        // request the param id marked with :
+        let id = request.params.id
+
+        let book = {
+            book_name: request.body.book_name,
+            created_at: request.body.created_at
+        }
+
+        await editBook(book, id)
+
+        response.status(207).json(book)
+
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+
+app.put('/courses/edit/id=:id', async (request, response, next) => {
+
+    try {
+        // request the param id marked with :
+        let id = request.params.id
+
+        let course = {
+            name: request.body.name,
+            department: request.body.department
+        }
+
+        await editCourse(course, id)
+
+        response.status(208).json(course)
+
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+
+app.put('/enrollments/edit/id=:id', async (request, response, next) => {
+
+    try {
+        // request the param id marked with :
+        let id = request.params.id
+
+        let enrollment = {
+            student_id: request.body.student_id,
+            course_id: request.body.course_id,
+            created_at: request.body.created_at
+        }
+
+        await editEnrollments(enrollment, id)
+
+        response.status(209).json(enrollment)
+
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+app.put('/students/edit/id=:id', async (request, response, next) => {
+
+    try {
+        // request the param id marked with :
+        let id = request.params.id
+
+        let student = {
+            first_name: request.body.first_name,
+            last_name: request.body.last_name,
+            email: request.body.email,
+            age:request.body.age
+        }
+
+        await editStudent(student, id)
+
+        response.status(210).json(student)
+
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+
+// DELETE asyncs 
 
 
 
@@ -182,11 +278,11 @@ app.post('/books/add',async (request,response,next)=>{
 
 
 
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
 
-    const error = new Error ("Not found");
+    const error = new Error("Not found");
 
-    error.status=404;
+    error.status = 404;
 
     next(error);
 
@@ -194,15 +290,15 @@ app.use((req,res,next)=>{
 })
 
 
-app.use((err,req,res,next)=>{
+app.use((err, req, res, next) => {
 
 
-    res.status(err.status||500);
+    res.status(err.status || 500);
 
     res.json({
 
-        error:{
-            message:err.message
+        error: {
+            message: err.message
         }
 
     })

@@ -70,3 +70,43 @@ export async function addStudent (student){
     }
 
 }
+
+
+
+export async function editStudent(student,id){
+
+    let data =  await getStudents();
+
+    let theStudent = data.students.filter(e=>e.id==id)
+
+    if(theStudent.length==0){
+
+        throw new Error("No editing possible, ID unexistent")
+
+
+    } else if(student.first_name===""||student.last_name===""||student.email===""||student.age===""){
+
+        throw new Error("No editing possible, empty fields")
+
+    } else {
+
+        data.students.forEach(element => {
+            if(student.first_name){
+                element.first_name=student.first_name
+            }
+
+            if(student.last_name){
+                element.last_name=student.last_name
+            }
+
+            if(student.email){
+                element.email=student.email
+            }
+        });
+
+        await saveStudents(data)
+
+    }
+
+
+}
