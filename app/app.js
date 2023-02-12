@@ -1,7 +1,7 @@
-import { addBooks, editBook, getBooks, saveBooks } from "./books/book-repository.js";
-import { addCourse, editCourse, getCourses, saveCourses } from "./courses/course-repository.js";
-import { addEnrollment, editEnrollments, getEnrollments, saveEnrollments } from "./enrollments/enrollment-repository.js";
-import { getStudents, saveStudents, addStudent, editStudent } from "./students/student-repository.js";
+import { addBooks, deleteBook, editBook, getBooks, saveBooks } from "./books/book-repository.js";
+import { addCourse, deleteCourse, editCourse, getCourses, saveCourses } from "./courses/course-repository.js";
+import { addEnrollment, deleteEnrollment, editEnrollments, getEnrollments, saveEnrollments } from "./enrollments/enrollment-repository.js";
+import { getStudents, saveStudents, addStudent, editStudent, deleteStudent } from "./students/student-repository.js";
 
 import express, { json, request, response } from "express";
 import cors from "cors";
@@ -271,6 +271,79 @@ app.put('/students/edit/id=:id', async (request, response, next) => {
 
 
 // DELETE asyncs 
+
+app.delete('/books/delete/id=:id',async(request,response,next)=>{
+
+
+    try {
+        let id = request.params.id
+
+        await deleteBook(id)
+
+        response.status(211).json("Book deleted successfully")
+
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+
+app.delete('/courses/delete/id=:id',async(request,response,next)=>{
+
+
+    try {
+        let id = request.params.id
+
+        await deleteCourse(id)
+
+        response.status(212).json("Course deleted successfully")
+
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+
+app.delete('/enrollments/delete/id=:id',async(request,response,next)=>{
+
+
+    try {
+        let id = request.params.id
+
+        await deleteEnrollment(id)
+
+        response.status(213).json("Enrollment deleted successfully")
+
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+
+app.delete('/students/delete/id=:id',async(request,response,next)=>{
+
+
+    try {
+        let id = request.params.id
+
+        await deleteStudent(id)
+
+        response.status(214).json("Student deleted successfully")
+
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+
+
+
+
+
 
 
 

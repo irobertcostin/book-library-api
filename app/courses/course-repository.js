@@ -109,3 +109,26 @@ export async function editCourse(course,id){
 
 
 }
+
+
+export async function deleteCourse(id){
+
+    let data = await getCourses();
+
+    let course = data.courses.filter(e=>e.id==id)
+
+    if(course.length==0){
+
+        throw new Error("Invalid course ID")
+
+    }else {
+
+        data.courses = data.courses.filter(e=>e.id!=id)
+
+        await saveCourses(data)
+
+    }
+
+
+
+}

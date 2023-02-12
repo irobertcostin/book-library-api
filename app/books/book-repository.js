@@ -107,3 +107,26 @@ export async function editBook(book,id){
 
 
 }
+
+
+export async function deleteBook(id){
+
+    let data = await getBooks();
+
+    let books = data.books.filter(e=>e.id==id)
+
+    if(books.length==0){
+
+        throw new Error("Invalid book ID")
+
+    }else {
+
+        data.books = data.books.filter(e=>e.id!=id)
+
+        await saveBooks(data)
+
+    }
+
+
+
+}
