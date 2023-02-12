@@ -91,22 +91,49 @@ export async function editStudent(student,id){
     } else {
 
         data.students.forEach(element => {
-            if(student.first_name){
-                element.first_name=student.first_name
-            }
+            if(element.id==id){
 
-            if(student.last_name){
-                element.last_name=student.last_name
-            }
-
-            if(student.email){
-                element.email=student.email
+                if(student.first_name){
+                    element.first_name=student.first_name
+                }
+    
+                if(student.last_name){
+                    element.last_name=student.last_name
+                }
+    
+                if(student.email){
+                    element.email=student.email
+                }
             }
         });
 
         await saveStudents(data)
 
     }
+
+
+}
+
+
+
+export async function deleteStudent(id){
+
+    let data = await getStudents();
+
+    let student = data.students.filter(e=>e.id==id)
+
+    if(student.length==0){
+
+        throw new Error("Invalid student ID")
+
+    }else {
+
+        data.students = data.students.filter(e=>e.id!=id)
+
+        await saveStudents(data)
+
+    }
+
 
 
 }

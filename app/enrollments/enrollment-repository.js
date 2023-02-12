@@ -113,3 +113,26 @@ export async function editEnrollments(enrollment,id){
 
 
 }
+
+
+export async function deleteEnrollment(id){
+
+    let data = await getEnrollments();
+
+    let enroll = data.enrollment.filter(e=>e.id==id)
+
+    if(enroll.length==0){
+
+        throw new Error("Invalid enrollment ID")
+
+    }else {
+
+        data.enrollment = data.enrollment.filter(e=>e.id!=id)
+
+        await saveEnrollments(data)
+
+    }
+
+
+
+}
