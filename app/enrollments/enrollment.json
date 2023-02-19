@@ -1,1 +1,1 @@
-{"enrollment":[{"id":1,"student_id":1,"course_id":2,"created_at":"1090/02/31"},{"id":2,"student_id":1,"course_id":2,"created_at":"1990/02/31"},{"id":3,"student_id":1,"course_id":2,"created_at":"1990/02/31"},{"id":4,"student_id":1,"course_id":2,"created_at":"1990/02/31"},{"student_id":133,"course_id":3,"created_at":"2023/02/10","id":1733}]}
+{"enrollment":[{"id":1,"student_id":1,"course_id":2,"created_at":"1090/02/31"}]}

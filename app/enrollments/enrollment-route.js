@@ -1,6 +1,6 @@
 import express from "express";
 
-import { getEnrollments , deleteEnrollment,addEnrollment,editEnrollments} from "./enrollment-repository.js";
+import { getEnrollments , deleteEnrollment,addEnrollment,editEnrollments, getEnrollmentsById} from "./enrollment-repository.js";
 
 
 
@@ -24,6 +24,21 @@ router.get('/all',asyncHandler(async(req,res)=>{
     const enrollments = await getEnrollments();
 
     return res.json(enrollments);
+
+}))
+
+router.get('/by-id/id=:id',asyncHandler(async(req,res,next)=>{
+
+
+   try {
+    let id = req.params.id;
+
+    let enroll = await getEnrollmentsById(id);
+    res.status(220).json(enroll);
+   } catch (error) {
+    next(error)
+   }
+
 
 }))
 

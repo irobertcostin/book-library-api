@@ -47,7 +47,8 @@ router.post('/add',asyncHandler(async(request,response)=>{
         first_name: request.body.first_name,
         last_name: request.body.last_name,
         email: request.body.email,
-        age: request.body.age
+        age: request.body.age,
+        password:request.body.password
     }
 
     await addStudent(student);

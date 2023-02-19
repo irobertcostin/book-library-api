@@ -60,7 +60,7 @@ export async function addStudent (student){
     // after no longer generating, the id is assigned to the new student
     student.id = id;
 
-    if(student.first_name===""&&student.last_name===""&&student.email===""&&student.age===""){
+    if(student.first_name===""&&student.last_name===""&&student.email===""&&student.age===""&&student.password===""){
 
         throw new Error ("Missing student attributes")
 

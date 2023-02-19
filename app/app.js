@@ -75,3 +75,4 @@ app.listen(3200, () => {
 
 // de lucrat erorile pentru acelasi student, carte, etc , incat sa nu se suprapopuleze daca au mai fost intrari
 // de facut client
+// de refacut get by id pentru toti

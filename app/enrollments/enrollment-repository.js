@@ -30,6 +30,34 @@ export function getEnrollments(){
 
 }
 
+
+export async function getEnrollmentsById(id){
+
+    let data = await getEnrollments();
+
+    let eById = data.enrollment.filter(e=>e.id==id)
+
+    if(eById.length==0){
+
+        throw new Error(`No enrollment with ID ${id} found`)
+
+    }else {
+        
+        for(let i=0;i<eById.length;i++){
+
+            if(eById[i].id==id){
+                console.log("aici")
+                return eById[i];
+            }
+
+
+        }
+
+    }
+
+
+}
+
 export async function saveEnrollments(data){
 
     return new Promise((resolve,reject)=>{
