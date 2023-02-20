@@ -27,6 +27,67 @@ export function getStudents() {
 
 }
 
+
+export async function getStudentsById(id){
+
+    let data = await getStudents();
+
+    let eById = data.students.filter(e=>e.id==id)
+
+    if(eById.length==0){
+
+        throw new Error(`No student with ID ${id} found`)
+
+    }else {
+        
+        for(let i=0;i<eById.length;i++){
+
+            if(eById[i].id==id){
+                // console.log("aici")
+                return eById[i];
+            }
+
+
+        }
+
+    }
+
+
+}
+
+export async function loginCheck(user){
+
+
+    let data = await getStudents();
+    
+    let check = data.students.filter(e=>e.email==user.email)
+    
+    if(check.length==0){
+        throw new Error ('No such account has been found')
+    }else {
+
+        for(let i=0;i<check.length;i++){
+
+            if(check[i].password===user.password){
+                return check[i];
+                
+                // sa returneze un status 
+                //sa salvam in client userul logat
+                // response.status in client  
+                // imputernicire parola 
+                // 
+            }else {
+                throw new Error ('Invalid password')
+            }
+        }
+    }
+
+}
+
+
+
+
+
 export async function saveStudents(data){
 
     return new Promise((resolve,reject)=>{
@@ -60,7 +121,7 @@ export async function addStudent (student){
     // after no longer generating, the id is assigned to the new student
     student.id = id;
 
-    if(student.first_name===""&&student.last_name===""&&student.email===""&&student.age===""&&student.password===""){
+    if(student.first_name===""||student.last_name==""||student.email===""||student.age===""||student.password===""){
 
         throw new Error ("Missing student attributes")
 

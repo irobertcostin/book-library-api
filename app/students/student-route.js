@@ -1,6 +1,6 @@
 import express from "express";
 
-import { getStudents , deleteStudent,addStudent,editStudent } from "./student-repository.js";
+import { getStudents , deleteStudent,addStudent,editStudent, getStudentsById, loginCheck } from "./student-repository.js";
 
 const router = express.Router();
 
@@ -28,6 +28,35 @@ router.get('/all',asyncHandler(async(req,res)=>{
 }))
 
 
+router.get('/by-ID/id=:id',asyncHandler(async(req,res)=>{
+
+    let id = req.params.id;
+
+    let student=await getStudentsById(id);
+
+    res.status(211).json(student)
+
+
+}))
+
+
+router.post('/login',asyncHandler(async(req,res)=>{
+
+    // POST for credentials hide
+
+    let studentToCheck = {
+        email:req.body.email,
+        password:req.body.password
+    }
+
+    let checkStudent = await loginCheck(studentToCheck)
+
+    return res.status(212).json("Successfully logged in");
+
+
+}))
+
+
 router.delete('/delete/id=:id',asyncHandler(async(req,res)=>{
 
     let id = req.params.id;
@@ -41,19 +70,23 @@ router.delete('/delete/id=:id',asyncHandler(async(req,res)=>{
 
 
 
-router.post('/add',asyncHandler(async(request,response)=>{
+router.post('/add',asyncHandler(async(request,response,next)=>{
 
-    let student = {
-        first_name: request.body.first_name,
-        last_name: request.body.last_name,
-        email: request.body.email,
-        age: request.body.age,
-        password:request.body.password
+    try {
+        let student = {
+            first_name: request.body.first_name,
+            last_name: request.body.last_name,
+            email: request.body.email,
+            age: request.body.age,
+            password:request.body.password
+        }
+    
+        await addStudent(student);
+    
+        response.status(201).json(student);
+    } catch (error) {
+        next(error)
     }
-
-    await addStudent(student);
-
-    response.status(201).json(student);
 
 }))
 
