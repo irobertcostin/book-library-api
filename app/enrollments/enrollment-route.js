@@ -30,14 +30,12 @@ router.get('/all',asyncHandler(async(req,res)=>{
 router.get('/by-id/id=:id',asyncHandler(async(req,res,next)=>{
 
 
-   try {
+   
     let id = req.params.id;
 
     let enroll = await getEnrollmentsById(id);
     res.status(220).json(enroll);
-   } catch (error) {
-    next(error)
-   }
+
 
 
 }))
