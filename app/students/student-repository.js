@@ -55,6 +55,35 @@ export async function getStudentsById(id){
 
 }
 
+export async function getStudentsByEmail(email){
+
+    let data = await getStudents();
+
+    let eById = data.students.filter(e=>e.email==email)
+
+    if(eById.length==0){
+
+        throw new Error(`No student registered with ${email} has been found`)
+
+    }else {
+        
+        for(let i=0;i<eById.length;i++){
+
+            if(eById[i].email==email){
+                // console.log("aici")
+                return eById[i];
+            }
+
+
+        }
+
+    }
+
+
+}
+
+
+
 export async function loginCheck(user){
 
 

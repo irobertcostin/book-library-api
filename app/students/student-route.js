@@ -1,14 +1,16 @@
 import express from "express";
 
-import { getStudents , deleteStudent,addStudent,editStudent, getStudentsById, loginCheck } from "./student-repository.js";
+import { getStudents , deleteStudent,addStudent,editStudent, getStudentsById, loginCheck, getStudentsByEmail } from "./student-repository.js";
 
 const router = express.Router();
 
 
+// asyncHandler de callback (un ceva, orice, care va fi async de rreq,res,next)
+
 function asyncHandler(callback) {
 
     return async (req,res,next)=>{
-
+// incearca acel ceva cu req res next
         try {
                 await callback(req,res,next);
         } catch (error) {
@@ -37,6 +39,20 @@ router.get('/by-ID/id=:id',asyncHandler(async(req,res)=>{
     res.status(211).json(student)
 
 
+
+}))
+
+router.get('/by-email/email=:email',asyncHandler(async(req,res)=>{
+
+
+    let email = req.params.email;
+
+    let student=await getStudentsByEmail(email);
+
+    res.status(213).json(student)
+
+
+
 }))
 
 
@@ -49,7 +65,7 @@ router.post('/login',asyncHandler(async(req,res)=>{
         password:req.body.password
     }
 
-    let checkStudent = await loginCheck(studentToCheck)
+    await loginCheck(studentToCheck)
 
     return res.status(212).json("Successfully logged in");
 
@@ -63,16 +79,16 @@ router.delete('/delete/id=:id',asyncHandler(async(req,res)=>{
 
     await deleteStudent(id);
 
-    return res.json(`Student with ID:${id} deleted successfully`)
+    return res.status(220).json(`Student with ID:${id} deleted successfully`)
 
 
 }))
 
 
 
-router.post('/add',asyncHandler(async(request,response,next)=>{
+router.post('/add',asyncHandler(async(request,response)=>{
 
-    try {
+    
         let student = {
             first_name: request.body.first_name,
             last_name: request.body.last_name,
@@ -80,13 +96,21 @@ router.post('/add',asyncHandler(async(request,response,next)=>{
             age: request.body.age,
             password:request.body.password
         }
-    
-        await addStudent(student);
+
+        let data = await getStudents();
+        let check = data.students.filter(e=>e.email==student.email)
+        console.log(check.length)
+        if(check.length==0){
+            await addStudent(student);
     
         response.status(201).json(student);
-    } catch (error) {
-        next(error)
-    }
+        }else {
+            response.status(450).json('This email address is already registered')
+        }
+
+    
+        
+
 
 }))
 
