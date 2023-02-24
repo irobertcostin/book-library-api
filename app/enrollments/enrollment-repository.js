@@ -173,3 +173,17 @@ export async function deleteEnrollment(id){
 
 
 }
+
+
+export async function getEnrollmentByStudentsId(id){
+
+    let data = await getEnrollments();
+    let eByStudentId= data.enrollment.filter(e=>e.student_id==id);
+    
+    
+    if(eByStudentId.length==0){
+        throw new Error("No enrollments found")
+    }else{
+        return eByStudentId;
+    }
+}

@@ -1,6 +1,6 @@
 import express from "express";
 
-import { getEnrollments , deleteEnrollment,addEnrollment,editEnrollments, getEnrollmentsById} from "./enrollment-repository.js";
+import { getEnrollments , deleteEnrollment,addEnrollment,editEnrollments, getEnrollmentsById, getEnrollmentByStudentsId} from "./enrollment-repository.js";
 
 
 
@@ -30,7 +30,6 @@ router.get('/all',asyncHandler(async(req,res)=>{
 router.get('/by-id/id=:id',asyncHandler(async(req,res,next)=>{
 
 
-   
     let id = req.params.id;
 
     let enroll = await getEnrollmentsById(id);
@@ -39,6 +38,20 @@ router.get('/by-id/id=:id',asyncHandler(async(req,res,next)=>{
 
 
 }))
+
+router.get('/by-student-id/id=:id',asyncHandler(async(req,res,next)=>{
+
+
+    let id = req.params.id;
+
+    let enroll = await getEnrollmentByStudentsId(id);
+    res.status(230).json(enroll);
+
+
+
+}))
+
+
 
 
 router.delete('/delete/id=:id',asyncHandler(async(req,res)=>{
@@ -89,6 +102,7 @@ router.put('/edit/id=:id',asyncHandler(async(request,response)=>{
 
 
 }))
+
 
 
 
