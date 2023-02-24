@@ -1,1 +1,1 @@
-{"enrollment":[{"id":1,"student_id":1,"course_id":2,"created_at":"1090/02/31"}]}
+{"enrollment":[{"id":1,"student_id":1,"course_id":2,"created_at":"1090/02/31"},{"student_id":1,"course_id":6,"created_at":"2023/10/01","id":1063}]}
