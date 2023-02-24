@@ -59,9 +59,13 @@ router.post('/add',asyncHandler(async(request,response)=>{
             course_id: request.body.course_id,
             created_at: request.body.created_at
         }
+
+        console.log(enrollment)
         await addEnrollment(enrollment);
-        // json response, of a JSON parsed object 
+        
         response.status(202).json(enrollment);
+
+
 }))
 
 
