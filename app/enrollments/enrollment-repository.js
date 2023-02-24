@@ -92,14 +92,21 @@ export async function addEnrollment (enrollment){
     // after no longer generating, the id is assigned to the new enrollment
     enrollment.id = id;
 
-    if(enrollment.student_id===""&&enrollment.course_id===""&&enrollment.created_at===""){
+    let check = data.enrollment.filter(e=>e.student_id==enrollment.student_id&&e.course_id==enrollment.course_id)
+    console.log(check.length)
 
-        throw new Error ("Missing enrollment attributes")
-
-    } else {
-        data.enrollment.push(enrollment);
-        await saveEnrollments(data);
+    if(check.length!=0){
+        throw new Error("You are already enrolled to this course")
     }
+    else if(check.length==0){
+        if(enrollment.student_id==""||enrollment.course_id==""){
+            throw new Error("Missing enrollment attributes")
+        }else {
+            data.enrollment.push(enrollment);
+            await saveEnrollments(data);
+        }
+    }
+    
 
 }
 
