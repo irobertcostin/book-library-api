@@ -60,7 +60,7 @@ router.post('/add',asyncHandler(async(request,response)=>{
             created_at: request.body.created_at
         }
 
-        console.log(enrollment)
+        
         await addEnrollment(enrollment);
         
         response.status(202).json(enrollment);
