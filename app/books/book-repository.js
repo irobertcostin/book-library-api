@@ -25,6 +25,33 @@ export function getBooks(){
 }
 
 
+export async function getBookById(id){
+
+    let data = await getBooks();
+
+    let eById = data.books.filter(e=>e.id==id)
+
+    if(eById.length==0){
+
+        throw new Error(`No book with ID ${id} found`)
+
+    }else {
+        
+        for(let i=0;i<eById.length;i++){
+
+            if(eById[i].id==id){
+                // console.log("aici")
+                return eById[i];
+            }
+
+
+        }
+
+    }
+
+
+}
+
 
 export async function saveBooks(data){
 
@@ -59,16 +86,24 @@ export async function addBooks(book){
 
     book.id = id;
 
-    if(book.book_name===""&&book.created_at===""){
-
+    if(book.book_name===""||book.created_at===""||book.author===""){
         throw new Error ("Missing book attributes")
+    }  else {
 
-    } else {
-        data.books.push(book);
-        await saveBooks(data);
+        let match = data.books.filter(e=>e.book_name==book.book_name&&e.author==book.author);
+        
+        console.log(match.length);
+
+        if(match.length!=0){
+
+            throw new Error ("This title is already available")
+
+        }else {
+            data.books.push(book);
+            await saveBooks(data);
+        }
+        
     }
-
-
 }
 
 
@@ -85,27 +120,43 @@ export async function editBook(book,id){
         throw new Error("No editing possible, ID unexistent")
 
 
-    } else if(book.book_name===""||book.created_at===""){
+    } else if(book.book_name===""||book.created_at===""||book.author===""){
 
         throw new Error("No editing possible, empty fields")
 
     } else {
 
-        data.books.forEach(element => {
-            if(element.id==id){
+        let match = data.books.filter(e=>e.book_name==book.book_name&&e.author==book.author);
+        
+        console.log(match.length);
 
-                if(book.book_name){
-                    element.book_name=book.book_name
-                }
+        if(match.length!=0){
+
+            throw new Error ("This title is already available")
+
+        }else {
+            data.books.forEach(element => {
+                if(element.id==id){
     
-                if(book.created_at){
-                    element.created_at=book.created_at
+                    if(book.book_name){
+                        element.book_name=book.book_name
+                    }
+        
+                    if(book.created_at){
+                        element.created_at=book.created_at
+                    }
+    
+                    if(book.author){
+                        element.author=book.author;
+                    }
                 }
-            }
-        });
+            });
+    
+            await saveBooks(data)
+    
+        }
 
-        await saveBooks(data)
-
+        
     }
 
 

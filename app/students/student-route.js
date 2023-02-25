@@ -30,7 +30,7 @@ router.get('/all',asyncHandler(async(req,res)=>{
 }))
 
 
-router.get('/by-ID/id=:id',asyncHandler(async(req,res)=>{
+router.get('/by-id/id=:id',asyncHandler(async(req,res)=>{
 
     let id = req.params.id;
 

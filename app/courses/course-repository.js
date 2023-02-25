@@ -30,6 +30,33 @@ export function getCourses(){
 
 }
 
+export async function getCourseById(id){
+
+    let data = await getCourses();
+
+    let eById = data.courses.filter(e=>e.id==id)
+
+    if(eById.length==0){
+
+        throw new Error(`No course with ID ${id} found`)
+
+    }else {
+        
+        for(let i=0;i<eById.length;i++){
+
+            if(eById[i].id==id){
+                // console.log("aici")
+                return eById[i];
+            }
+
+
+        }
+
+    }
+
+
+}
+
 export async function saveCourses(data){
 
     return new Promise((resolve,reject)=>{

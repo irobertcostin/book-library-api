@@ -1,6 +1,6 @@
 import  express  from "express";
 
-import { getBooks,deleteBook,addBooks,editBook } from "./book-repository.js";
+import { getBooks,deleteBook,addBooks,editBook,getBookById } from "./book-repository.js";
 
 const router = express.Router();
 
@@ -31,6 +31,19 @@ router.get('/all',asyncHandler(async(req,res)=>{
 }));
 
 
+router.get('/by-id/id=:id',asyncHandler(async(req,res)=>{
+
+    let id = req.params.id;
+
+    let book=await getBookById(id);
+
+    res.status(211).json(book)
+
+
+
+}))
+
+
 router.delete('/delete/id=:id',asyncHandler(async(req,res)=>{
 
     let id = req.params.id;
@@ -46,7 +59,8 @@ router.post('/add',asyncHandler(async(req,res)=>{
     let book = {
 
         book_name: req.body.book_name,
-        created_at: req.body.created_at
+        created_at: req.body.created_at,
+        author:req.body.author
     }
 
     await addBooks(book);
@@ -61,7 +75,8 @@ router.put('/edit/id=:id',asyncHandler(async(request,response)=>{
 
     let book = {
         book_name: request.body.book_name,
-        created_at: request.body.created_at
+        created_at: request.body.created_at,
+        author:request.body.author
     }
 
     await editBook(book, id)

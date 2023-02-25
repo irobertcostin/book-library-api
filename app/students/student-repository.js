@@ -174,7 +174,7 @@ export async function editStudent(student,id){
         throw new Error("No editing possible, ID unexistent")
 
 
-    } else if(student.first_name===""||student.last_name===""||student.email===""||student.age===""){
+    } else if(student.first_name===""||student.last_name===""||student.age===0){
 
         throw new Error("No editing possible, empty fields")
 
@@ -193,6 +193,10 @@ export async function editStudent(student,id){
     
                 if(student.email){
                     element.email=student.email
+                }
+
+                if(student.age){
+                    element.age=student.age;
                 }
             }
         });

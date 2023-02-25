@@ -1,6 +1,6 @@
 import express  from "express";
 
-import { getCourses ,deleteCourse ,addCourse,editCourse} from "./course-repository.js";
+import { getCourses ,deleteCourse ,addCourse,editCourse, getCourseById} from "./course-repository.js";
 
 const router = express.Router();
 
@@ -27,6 +27,19 @@ router.get('/all',asyncHandler(async(request,response)=>{
     const courses = await getCourses();
 
     return response.json(courses)
+
+
+}))
+
+
+router.get('/by-id/id=:id',asyncHandler(async(req,res)=>{
+
+    let id = req.params.id;
+
+    let student=await getCourseById(id);
+
+    res.status(211).json(student)
+
 
 
 }))
