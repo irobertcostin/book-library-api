@@ -180,29 +180,42 @@ export async function editStudent(student,id){
 
     } else {
 
-        data.students.forEach(element => {
-            if(element.id==id){
 
-                if(student.first_name){
-                    element.first_name=student.first_name
-                }
+        let match = data.students.filter(e=>e.first_name==student.first_name&&e.last_name==student.last_name);
+        
+        // console.log(match.length);
+
+        if(match.length!=0){
+
+            throw new Error ("This user already exists")
+
+        }else {
+            data.students.forEach(element => {
+                if(element.id==id){
     
-                if(student.last_name){
-                    element.last_name=student.last_name
-                }
+                    if(student.first_name){
+                        element.first_name=student.first_name
+                    }
+        
+                    if(student.last_name){
+                        element.last_name=student.last_name
+                    }
+        
+                    if(student.email){
+                        element.email=student.email
+                    }
     
-                if(student.email){
-                    element.email=student.email
+                    if(student.age){
+                        element.age=student.age;
+                    }
                 }
+            });
+    
+            await saveStudents(data)
+    
+        }
 
-                if(student.age){
-                    element.age=student.age;
-                }
-            }
-        });
-
-        await saveStudents(data)
-
+      
     }
 
 
