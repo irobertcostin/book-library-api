@@ -150,13 +150,22 @@ export async function addStudent (student){
     // after no longer generating, the id is assigned to the new student
     student.id = id;
 
-    if(student.first_name===""||student.last_name==""||student.email===""||student.age===""||student.password===""){
+    if(student.first_name===""||student.last_name==""||student.email===""||student.age===0||student.password===""){
 
         throw new Error ("Missing student attributes")
 
     } else {
-        data.students.push(student);
-        await saveStudents(data);
+
+        let check = data.students.filter(e=>e.email==student.email)
+
+        if(check.length==0){
+            data.students.push(student);
+            await saveStudents(data);
+        
+        }else {
+            throw new Error('This email address is already registered')
+        }
+        
     }
 
 }

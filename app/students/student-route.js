@@ -97,19 +97,27 @@ router.post('/add',asyncHandler(async(request,response)=>{
             password:request.body.password
         }
 
-        let data = await getStudents();
-        let check = data.students.filter(e=>e.email==student.email)
-        console.log(check.length)
-        if(check.length==0){
-            await addStudent(student);
-    
+
+        await addStudent(student);
+
         response.status(201).json(student);
+
+        // let data = await getStudents();
+        // 
+        // console.log(check.length)
+        if(check.length==0){
+            
+    
+        
         }else {
             response.status(450).json('This email address is already registered')
         }
 
     
-        
+       
+
+
+
 
 
 }))
