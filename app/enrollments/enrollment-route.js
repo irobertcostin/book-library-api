@@ -27,7 +27,7 @@ router.get('/all',asyncHandler(async(req,res)=>{
 
 }))
 
-router.get('/by-id/id=:id',asyncHandler(async(req,res,next)=>{
+router.get('/by-id/id=:id',asyncHandler(async(req,res)=>{
 
 
     let id = req.params.id;
@@ -39,7 +39,7 @@ router.get('/by-id/id=:id',asyncHandler(async(req,res,next)=>{
 
 }))
 
-router.get('/by-student-id/id=:id',asyncHandler(async(req,res,next)=>{
+router.get('/by-student-id/id=:id',asyncHandler(async(req,res)=>{
 
 
     let id = req.params.id;
